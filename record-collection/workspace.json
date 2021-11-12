@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "projects": {
+    "record-collection-server": {
+      "root": "apps/record-collection-server",
+      "sourceRoot": "apps/record-collection-server/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/record-collection-server",
+            "main": "apps/record-collection-server/src/main.ts",
+            "tsConfig": "apps/record-collection-server/tsconfig.app.json",
+            "assets": ["apps/record-collection-server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/record-collection-server/src/environments/environment.ts",
+                  "with": "apps/record-collection-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "record-collection-server:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/record-collection-server/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/record-collection-server"],
+          "options": {
+            "jestConfig": "apps/record-collection-server/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "defaultProject": "record-collection-server"
+}
